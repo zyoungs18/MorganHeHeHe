@@ -1,10 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Cool Girlfriend &#128526;</title>
+    <meta charset="UTF-8">
+    <title>My Cool Girlfriend 😎</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Morgan Murphy</h1>
-<p>Paragraph</p>
+
+
+<nav class="hotbar">
+    <a href="index.html">Home</a>
+    <a href="herring.html">Herring</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="voice.html">Voice</a>
+</nav>
+
+
+<div class="animated-image-container">
+    <img src="morgan/circle.jpg" alt="Special Image" class="animated-image">
+</div>
+
+
+<canvas id="confetti-canvas"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+    const duration = 3 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        }));
+        confetti(Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        }));
+    }, 250);
+</script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
