@@ -2,9 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>My Cool Girlfriend 😎</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="herring-page">
+
+<nav class="hotbar">
+    <a href="index.html">Home</a>
+    <a href="herring.html">Herring</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="voice.html">Voice</a>
+</nav>
+
+<div class="herring-container">
+    <img src="morgan/RedHerring.png" alt="Herring Image" class="herring-image">
+
+    <div class="herring-textbox">
+        <p>Behold the mighty herring! Revered across the seas for its shimmering scales and iconic taste.</p>
+        <p>
+            red her·ring<br>
+            /ˌred ˈheriNG/<br>
+            noun<br>
+            noun: red herring; plural noun: red herrings<br>
+            1.<br>
+            a dried smoked herring, which is turned red by the smoke.<br>
+            2.<br>
+            a clue or piece of information that is, or is intended to be, misleading or distracting.<br>
+        </p>
+    </div>
+
+    <button id="play-sound-btn">Press me</button>
+</div>
+
+<audio id="herring-sound" src="sounds/herring-sounds.m4a"></audio>
+
+<script>
+    const soundBtn = document.getElementById('play-sound-btn');
+    const herringSound = document.getElementById('herring-sound');
+
+    soundBtn.addEventListener('click', () => {
+        herringSound.play();
+    });
+</script>
 
 </body>
 </html>

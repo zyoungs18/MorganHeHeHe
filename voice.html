@@ -2,9 +2,80 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>My Cool Girlfriend 😎</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="voice-page">
+
+<nav class="hotbar">
+    <a href="index.html">Home</a>
+    <a href="herring.html">Herring</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="voice.html">Voice</a>
+</nav>
+
+
+<div class="voice-container">
+    <div class="voice-textbox">
+        <p>Thank you so much! Mwah :) </p>
+    </div>
+
+    <canvas id="visualizer"></canvas>
+
+    <audio id="audio" src="sounds/reverse.mp3" controls></audio>
+</div>
+
+<script>
+    const audio = document.getElementById('audio');
+    const canvas = document.getElementById('visualizer');
+    const canvasCtx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth * 0.8;
+        canvas.height = window.innerHeight * 0.4;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioSource = audioContext.createMediaElementSource(audio);
+    const analyser = audioContext.createAnalyser();
+
+    audioSource.connect(analyser);
+    analyser.connect(audioContext.destination);
+    analyser.fftSize = 256;
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function draw() {
+        requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+
+        canvasCtx.fillStyle = '#111';
+        canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const barWidth = (canvas.width / bufferLength) * 2.5;
+        let barHeight;
+        let x = 0;
+
+        for(let i = 0; i < bufferLength; i++) {
+            barHeight = dataArray[i];
+
+            canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,150)';
+            canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+            x += barWidth + 1;
+        }
+    }
+
+    audio.addEventListener('play', () => {
+        if (audioContext.state === 'suspended') {
+            audioContext.resume();
+        }
+        draw();
+    });
+</script>
 
 </body>
 </html>

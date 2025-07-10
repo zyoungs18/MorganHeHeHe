@@ -24,30 +24,38 @@
 <canvas id="confetti-canvas"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
-    const duration = 3 * 1000;
+    const myCanvas = document.getElementById('confetti-canvas');
+    const myConfetti = confetti.create(myCanvas, { resize: true, useWorker: true });
+
+    const duration = 7 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    const defaults = {
+        startVelocity: 40,
+        ticks: 60,
+        zIndex: 10,
+    };
 
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    const interval = setInterval(function() {
+    const interval = setInterval(function () {
         const timeLeft = animationEnd - Date.now();
 
         if (timeLeft <= 0) {
-            return clearInterval(interval);
+            clearInterval(interval);
         }
 
-        const particleCount = 50 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, {
-            particleCount,
-            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-        }));
-        confetti(Object.assign({}, defaults, {
-            particleCount,
-            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-        }));
+        myConfetti(
+            Object.assign({}, defaults, {
+                particleCount: Math.random() * 200 + 200,
+                origin: {
+                    x: Math.random(),
+                    y: Math.random() * 0.5,
+                },
+                scalar: Math.random() * 1.2 + 0.4,
+                spread: Math.random() * 720 - 360,
+                angle: Math.random() < 0.5
+                    ? Math.random() * 90 + 45
+                    : Math.random() * 90 + 225
+            })
+        );
     }, 250);
 </script>
 
